@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Game.h"
-
+#include "utils.h"
 Game::Game( const Window& window ) 
 	:BaseGame{ window }
 {
@@ -38,6 +38,7 @@ void Game::Update( float elapsedSec )
 void Game::Draw( ) const
 {
 	ClearBackground( );
+	utils::FillRect(Point2f{}, 100, 100);
 }
 
 void Game::ProcessKeyDownEvent( const SDL_KeyboardEvent & e )
