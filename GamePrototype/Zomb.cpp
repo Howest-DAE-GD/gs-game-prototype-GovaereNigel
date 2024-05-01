@@ -28,8 +28,8 @@ void Zomb::Draw()
 
 void Zomb::Update(float elapsedSec)
 {
-	const float speedX{ 70.f * elapsedSec };
-	const float speedY{ 140.f * elapsedSec };
+	const float speedX{ 60.f * elapsedSec };
+	const float speedY{ 120.f * elapsedSec };
 	if (m_TypeOfZomb == 0)
 	{
 		if (m_Inverse == true)
@@ -661,4 +661,14 @@ bool Zomb::IsHitByAsteroid(Point2f& posAsteroid, float radius, bool stateOfAster
 	}
 
 	return isHit;
+}
+
+Rectf Zomb::GetBounds()
+{
+	return m_Bounds;
+}
+
+int Zomb::GetDamage()
+{
+	return m_Damage;
 }

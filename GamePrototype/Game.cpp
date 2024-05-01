@@ -5,6 +5,7 @@
 #include "Asteroid.h"
 #include "Zomb.h"
 #include "Hearts.h"
+#include "Player.h"
 
 Game::Game( const Window& window ) 
 	:BaseGame{ window }
@@ -24,18 +25,22 @@ void Game::Initialize( )
 		m_Asteroid[idx] = new Asteroid(100.f, m_Window);
 	}
 
-	for (int idx{}; idx < m_TOTALZOMBIES; ++idx)
-	{
-		m_Zomb[idx] = new Zomb{m_Window,30.f,30.f};
-
-	}
-
 	for (int idx{}; idx < m_TOTALHEARTS; ++idx)
 	{
 		m_PosHearts[idx] = m_PosDefaultHeart;
-		m_Hearts[idx] = new Hearts{ m_PosHearts[idx]};
+		m_Hearts[idx] = new Hearts{ m_PosHearts[idx] };
 	}
 
+
+	for (int idx{}; idx < m_TOTALZOMBIES; ++idx)
+	{
+		m_Zomb[idx] = new Zomb{m_Window,25.f,25.f};
+
+	}
+
+	m_PosPlayer.x = GetViewPort().width/2;
+	m_PosPlayer.y = GetViewPort().height/2;
+	m_Player = new Player{ m_PosPlayer };
 
 }
 
@@ -51,156 +56,184 @@ void Game::Cleanup( )
 		delete m_Zomb[idx];
 		m_Zomb[idx] = nullptr;
 	}
+
+	delete m_Player;
+	m_Player = nullptr;
+
 }
 
 
 void Game::Update( float elapsedSec )
 {
 
-	std::cout << m_PosHearts[0].x << m_PosHearts[0].y << std::endl;
-	std::cout << m_PosHearts[1].x << m_PosHearts[1].y << std::endl;
-	std::cout << m_PosHearts[2].x << m_PosHearts[2].y << std::endl;
-	std::cout << m_PosHearts[3].x << m_PosHearts[3].y << std::endl;
+	//std::cout << m_PosHearts[0].x << m_PosHearts[0].y << std::endl;
+	//std::cout << m_PosHearts[1].x << m_PosHearts[1].y << std::endl;
+	//std::cout << m_PosHearts[2].x << m_PosHearts[2].y << std::endl;
+	//std::cout << m_PosHearts[3].x << m_PosHearts[3].y << std::endl;
 
-
-
-
-
-	if (m_TimerAsteroids <= 1)
+	if (m_StateOfGame != false)
 	{
-		m_Asteroid[0]->Update(elapsedSec);
-
-		m_TimerAsteroids += elapsedSec;
-	}
-	if (m_TimerAsteroids <= 2)
-	{
-		m_Asteroid[0]->Update(elapsedSec);
-		m_Asteroid[1]->Update(elapsedSec);
-
+		m_SpeedPlayer = 500.f * elapsedSec;
 		m_TimerAsteroids += elapsedSec;
 
-	}
-	if (m_TimerAsteroids > 2)
-	{
-		for (int idx{}; idx < m_TOTALASTEROIDS; ++idx)
+		const Uint8* pStates = SDL_GetKeyboardState(nullptr);
+		m_Player->Update(elapsedSec, pStates);
+		
+
+
+
+		if (m_TimerAsteroids > 6)
 		{
-			m_Asteroid[idx]->Update(elapsedSec);
-			m_PosAsteroid[idx] = m_Asteroid[idx]->GetPosition();
-			if (m_Asteroid[idx]->GetStateOfAsteroid() == true)
+			for (int idx{}; idx < m_TOTALZOMBIES; ++idx)
 			{
-				if (m_Asteroid[idx]->HasAHeart() == true)
+				m_Zomb[idx]->Update(elapsedSec);
+			}
+
+			for (int k{}; k < m_TOTALASTEROIDS; ++k)
+			{
+				m_Asteroid[k]->Update(elapsedSec);
+				m_PosAsteroid[k] = m_Asteroid[k]->GetPosition();
+
+				if (m_Asteroid[k]->GetStateOfAsteroid() == true)
 				{
-
-					m_PreviousPosAsteroid[idx] = m_PosAsteroid[idx];
-
-
-
-					for (int j{}; j < m_TOTALHEARTS; ++j)
+					if (m_Asteroid[k]->HasAHeart() == true)
 					{
-
-						if (m_PosHearts[j].x != m_PreviousPosAsteroid[idx].x && m_PosHearts[j].y != m_PreviousPosAsteroid[idx].y)
+						m_PreviousPosAsteroid[k] = m_PosAsteroid[k];
+						for (int j{}; j < m_TOTALHEARTS; ++j)
 						{
-							if (m_PosHearts[j].x == m_PosDefaultHeart.x && m_PosHearts[j].y == m_PosDefaultHeart.y)
+							if (m_PosHearts[j].x != m_PreviousPosAsteroid[k].x && m_PosHearts[j].y != m_PreviousPosAsteroid[k].y)
 							{
-								if (j == 0)
+								if (m_PosHearts[j].x == m_PosDefaultHeart.x && m_PosHearts[j].y == m_PosDefaultHeart.y)
 								{
-									if (m_PosHearts[m_TOTALHEARTS - 1].x != m_PreviousPosAsteroid[idx].x && m_PosHearts[m_TOTALHEARTS - 1].y != m_PreviousPosAsteroid[idx].y)
+									if (j == 0)
 									{
-										m_PosHearts[j].x = m_PosAsteroid[idx].x;
-										m_PosHearts[j].y = m_PosAsteroid[idx].y;
-										m_Hearts[j]->SetPosition(m_PosHearts[j]);
+										if (m_PosHearts[m_TOTALHEARTS - 1].x != m_PreviousPosAsteroid[k].x && m_PosHearts[m_TOTALHEARTS - 1].y != m_PreviousPosAsteroid[k].y)
+										{
+											m_PosHearts[j].x = m_PosAsteroid[k].x;
+											m_PosHearts[j].y = m_PosAsteroid[k].y;
+											m_Hearts[j]->SetPosition(m_PosHearts[j]);
+										}
+										else return;
 									}
-									else break;
-								}
-								else
-								{
-									if (m_PosHearts[j - 1].x != m_PreviousPosAsteroid[idx].x && m_PosHearts[j - 1].y != m_PreviousPosAsteroid[idx].y)
+									else
 									{
-										m_PosHearts[j].x = m_PosAsteroid[idx].x;
-										m_PosHearts[j].y = m_PosAsteroid[idx].y;
-										m_Hearts[j]->SetPosition(m_PosHearts[j]);
+										if (m_PosHearts[j - 1].x != m_PreviousPosAsteroid[k].x && m_PosHearts[j - 1].y != m_PreviousPosAsteroid[k].y)
+										{
+											m_PosHearts[j].x = m_PosAsteroid[k].x;
+											m_PosHearts[j].y = m_PosAsteroid[k].y;
+											m_Hearts[j]->SetPosition(m_PosHearts[j]);
+										}
+										else return;
 									}
-									else break;
+
 								}
+
 
 							}
-
-
 						}
-
-
-
-
-						//		if (j == 0)
-						//	{
-						//		if (m_PosHearts[m_TOTALHEARTS - 1].x != m_PosDefaultHeart.x && m_PosHearts[m_TOTALHEARTS - 1].y != m_PosDefaultHeart.y)
-						//		{
-						//			if (m_PosHearts[j].x == m_PosHearts[m_TOTALHEARTS - 1].x && m_PosHearts[j].y == m_PosHearts[m_TOTALHEARTS - 1].y) break;
-						//		}
-						//	}
-						//	else
-						//	{
-						//		//std::cout << "stopped" << std::endl;
-
-						//		if (m_PosHearts[j-1].x != m_PosDefaultHeart.x && m_PosHearts[j-1].y != m_PosDefaultHeart.y)
-						//		{
-
-						//			break;
-
-						//			if (m_PosHearts[j].x == m_PosHearts[j - 1].x && m_PosHearts[j].y == m_PosHearts[j - 1].y)
-						//			{
-						//				std::cout << "stopped" << std::endl;
-						//				break;
-						//			}
-						//		}
-
-						//	}
-
-						//if (m_PosHearts[j].x == m_PosDefaultHeart.x && m_PosHearts[j].y == m_PosDefaultHeart.y)
-						//{
-						//	m_PosHearts[j].x = m_PosAsteroid[idx].x;
-						//	m_PosHearts[j].y = m_PosAsteroid[idx].y;
-						//	m_Hearts[j]->SetPosition(m_PosHearts[j]);
-						//}
-
-
-
-
-						//}
-
-						
 					}
-
 				}
-			}
+				for (int idx{}; idx < m_TOTALZOMBIES; ++idx)
+				{
+					//m_Zomb[idx]->Update(elapsedSec);
+					if (m_Zomb[idx]->IsHitByAsteroid(m_PosAsteroid[k], m_Asteroid[k]->GetRadius(), m_Asteroid[k]->GetStateOfAsteroid()) == true)
+					{
+						m_Zomb[idx]->ResetPos();
+					}
+					if (m_Player->IshHitZomb(m_Zomb[idx]->GetBounds()) == true)
+					{
+						if (m_Player->GetHealth() > 1)
+						{
+							m_Player->LoseHealth(m_Zomb[idx]->GetDamage());
+							m_Zomb[idx]->ResetPos();
+						}
+						else
+						{
+							m_StateOfGame = false;
+						}
+					}
+				}
+				if (m_Player->IsHitAsteroid(m_PosAsteroid[k], m_Asteroid[k]->GetRadius(), m_Asteroid[k]->GetStateOfAsteroid()) == true)
+				{
+					if (m_Player->GetHealth() > 1)
+					{
+						m_Player->LoseHealth(m_Asteroid[k]->GetDamage());
+						m_Asteroid[k]->ResetAsteroid();
+						m_PosAsteroid[k] = m_Asteroid[k]->GetPosition();
+					}
+					else
+					{
+						m_StateOfGame = false;
+					}
+				}
+				}			
+			//for (int idx{}; idx < m_TOTALZOMBIES; ++idx)
+			//{
+			//	m_Zomb[idx]->Update(elapsedSec);
+			//	for (int j{}; j < m_TOTALASTEROIDS; ++j)
+			//	{
+			//		if (m_Zomb[idx]->IsHitByAsteroid(m_PosAsteroid[j], m_Asteroid[j]->GetRadius(), m_Asteroid[j]->GetStateOfAsteroid()) == true)
+			//		{
+			//			m_Zomb[idx]->ResetPos();
+			//		}
+			//		if (m_Player->IsHitAsteroid(m_PosAsteroid[j], m_Asteroid[j]->GetRadius(), m_Asteroid[j]->GetStateOfAsteroid()) == true)
+			//		{
+			//			if (m_Player->GetHealth() > 1)
+			//			{
+			//				m_Player->LoseHealth(m_Asteroid[idx]->GetDamage());
+			//				m_Asteroid[idx]->ResetAsteroid();
+			//				m_PosAsteroid[idx] = m_Asteroid[idx]->GetPosition();
+			//				//std::cout << m_Player->GetHealth() << std::endl;
+			//			}
+			//			else
+			//			{
+			//				m_StateOfGame = false;
+			//			}
+			//		}
+			//	}
+			//	if (m_Player->IshHitZomb(m_Zomb[idx]->GetBounds()) == true)
+			//	{
+			//		if (m_Player->GetHealth() > 1)
+			//		{
+			//			m_Player->LoseHealth(m_Zomb[idx]->GetDamage());
+			//			m_Zomb[idx]->ResetPos();
+			//			std::cout << m_Player->GetHealth() << std::endl;
+			//		}
+			//		else
+			//		{
+			//			m_StateOfGame = false;
+			//		}
+			//	}
+
+			//}
 
 		}
-		for (int idx{}; idx < m_TOTALZOMBIES; ++idx)
+		else if (m_TimerAsteroids > 4)
 		{
-			m_Zomb[idx]->Update(elapsedSec);
-			if (m_Zomb[idx]->IsHitByAsteroid(m_PosAsteroid[0], m_Asteroid[0]->GetRadius(),m_Asteroid[0]->GetStateOfAsteroid()) == true)
-			{
-				//std::cout << "hit first" << std::endl;
-				m_Zomb[idx]->ResetPos();
-			}
-			if (m_Zomb[idx]->IsHitByAsteroid(m_PosAsteroid[1], m_Asteroid[1]->GetRadius(), m_Asteroid[1]->GetStateOfAsteroid()) == true)
-			{
-				//std::cout << "hit first" << std::endl;
-				m_Zomb[idx]->ResetPos();
-			}	
-			if (m_Zomb[idx]->IsHitByAsteroid(m_PosAsteroid[2], m_Asteroid[2]->GetRadius(), m_Asteroid[2]->GetStateOfAsteroid()) == true)
-			{
-				//std::cout << "hit first" << std::endl;
-				m_Zomb[idx]->ResetPos();
-			}
-		
+			m_Asteroid[0]->Update(elapsedSec);
+			m_Asteroid[1]->Update(elapsedSec);
 		}
+		else if (m_TimerAsteroids > 2)
+		{
+			m_Asteroid[0]->Update(elapsedSec);
+
+		}
+		
+		for (int idx{}; idx < m_TOTALHEARTS; ++idx)
+		{
+			if (m_Player->IsHitHeart(m_PosHearts[idx], m_Hearts[idx]->GetRadius()))
+			{
+				if(m_Player->GetHealth()<4)m_Player->ReceiveHealth(m_Hearts[idx]->GetHealth());
+				m_PosHearts[idx] = m_PosDefaultHeart;
+				m_Hearts[idx]->SetPosition(m_PosDefaultHeart);
+			}
+		}
+		std::cout << m_Player->GetHealth() << std::endl;
+
+
+
 
 	}
-
-
-
-
 
 }
 
@@ -222,29 +255,24 @@ void Game::Draw( ) const
 	{
 		m_Hearts[idx]->Draw();
 	}
-	
+
+	m_Player->Draw();
 }
 
 void Game::ProcessKeyDownEvent( const SDL_KeyboardEvent & e )
 {
-	//std::cout << "KEYDOWN event: " << e.keysym.sym << std::endl;
+	
+	//if(e.keysym.sym == SDLK_LEFT) m_PosPlayer.x -= m_SpeedPlayer;
+	//if (e.keysym.sym == SDLK_RIGHT) m_PosPlayer.x += m_SpeedPlayer;
+	//if (e.keysym.sym == SDLK_UP) m_PosPlayer.y += m_SpeedPlayer;
+	//if (e.keysym.sym == SDLK_DOWN) m_PosPlayer.y -= m_SpeedPlayer;
+
+
 }
 
 void Game::ProcessKeyUpEvent( const SDL_KeyboardEvent& e )
 {
-	switch ( e.keysym.sym )
-	{
-	case SDLK_SPACE:
-		//std::cout << "Left arrow key released\n";
-		break;
-	case SDLK_RIGHT:
-		//std::cout << "`Right arrow key released\n";
-		break;
-	case SDLK_1:
-	case SDLK_KP_1:
-		//std::cout << "Key 1 released\n";
-		break;
-	}
+	
 }
 
 void Game::ProcessMouseMotionEvent( const SDL_MouseMotionEvent& e )

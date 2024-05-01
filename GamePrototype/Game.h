@@ -6,6 +6,7 @@
 class Asteroid;
 class Zomb;
 class Hearts;
+class Player;
 class Game : public BaseGame
 {
 public:
@@ -28,8 +29,7 @@ public:
 	void ProcessMouseUpEvent( const SDL_MouseButtonEvent& e ) override;
 
 
-	//Point2f ResetPosition(Rectf platform)const;
-	//float GetRandomHeight(float heightPreviousPlatform)const;
+	
 private:
 
 	// FUNCTIONS
@@ -45,7 +45,7 @@ private:
 	Point2f m_PreviousPosAsteroid[m_TOTALASTEROIDS];
 	float m_TimerAsteroids{};
 
-	static const int m_TOTALZOMBIES{4};
+	static const int m_TOTALZOMBIES{6};
 	Zomb* m_Zomb[m_TOTALZOMBIES];
 	float m_TimerZombies{};
 
@@ -55,4 +55,10 @@ private:
 	Point2f m_PosDefaultHeart{ -200.f,0.f };
 
 
+	Player* m_Player;
+	Point2f m_PosPlayer;
+	float m_SpeedPlayer;
+
+
+	bool m_StateOfGame{true};
 };

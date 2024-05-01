@@ -10,6 +10,9 @@ public:
 	float GetRadius();
 	bool GetStateOfAsteroid();
 	bool HasAHeart();
+	int GetDamage();
+	void ResetAsteroid();
+
 
 private:
 	float m_Radius;

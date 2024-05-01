@@ -8,7 +8,8 @@ public:
 	void ResetPos();
 	int GetRandomType();
 	bool IsHitByAsteroid(Point2f& posAsteroid, float radius, bool stateOfAsteroid);
-
+	Rectf GetBounds();
+	int GetDamage();
 
 private:
 	int m_TypeOfZomb;

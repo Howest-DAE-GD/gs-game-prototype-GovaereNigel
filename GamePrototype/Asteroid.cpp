@@ -32,7 +32,7 @@ void Asteroid::Draw()
 
 void Asteroid::Update(float elapsedSec)
 {
-	const float speedAsteroid{35.f*elapsedSec};
+	const float speedAsteroid{40.f*elapsedSec};
 	const float maxResetTime{0.5f};
 
 	if (m_State == false)
@@ -96,4 +96,21 @@ bool Asteroid::GetStateOfAsteroid()
 bool Asteroid::HasAHeart()
 {
 	return m_HasHeart;
+}
+
+int Asteroid::GetDamage()
+{
+	return m_Damage;
+}
+
+void Asteroid::ResetAsteroid()
+{
+	m_State = false;
+	m_Timer = 0;
+	m_FakeRadius = 0;
+
+	m_Position = GetRandomPosition();
+	const int random{ rand() % 2 + 0 };
+	if (random == 0) m_HasHeart = false;
+	else m_HasHeart = true;
 }
