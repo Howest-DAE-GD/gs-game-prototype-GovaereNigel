@@ -7,6 +7,7 @@ class Asteroid;
 class Zomb;
 class Hearts;
 class Player;
+class SpecialZomb;
 class Game : public BaseGame
 {
 public:
@@ -43,7 +44,7 @@ private:
 	Asteroid* m_Asteroid[m_TOTALASTEROIDS];
 	Point2f m_PosAsteroid[m_TOTALASTEROIDS];
 	Point2f m_PreviousPosAsteroid[m_TOTALASTEROIDS];
-	float m_TimerAsteroids{};
+	float m_SpeedAsteroid;
 
 	static const int m_TOTALZOMBIES{6};
 	Zomb* m_Zomb[m_TOTALZOMBIES];
@@ -59,6 +60,10 @@ private:
 	Point2f m_PosPlayer;
 	float m_SpeedPlayer;
 
+	static const int m_TOTALSPECIALZOMBS{3};
+	SpecialZomb* m_SpecialZomb[m_TOTALSPECIALZOMBS];
 
 	bool m_StateOfGame{true};
+	float m_Timer{};
+
 };

@@ -4,7 +4,7 @@ class Asteroid
 public:
 	Asteroid(float radius,Point2f& window);
 	void Draw();
-	void Update(float elapsedSec);
+	void Update(float elapsedSec,float speed);
 	Point2f GetRandomPosition();
 	Point2f GetPosition();
 	float GetRadius();

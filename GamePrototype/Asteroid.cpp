@@ -30,16 +30,16 @@ void Asteroid::Draw()
 
 }
 
-void Asteroid::Update(float elapsedSec)
+void Asteroid::Update(float elapsedSec, float speed)
 {
-	const float speedAsteroid{40.f*elapsedSec};
+	//const float speedAsteroid{40.f*elapsedSec};
 	const float maxResetTime{0.5f};
 
 	if (m_State == false)
 	{
 		if (m_FakeRadius <= m_Radius)
 		{
-			m_FakeRadius += speedAsteroid;
+			m_FakeRadius += speed;
 		}
 		else
 		{

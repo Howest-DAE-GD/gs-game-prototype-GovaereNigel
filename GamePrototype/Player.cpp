@@ -5,11 +5,28 @@
 Player::Player(Point2f& pos)
 	:m_BoundsPlayer{pos.x,pos.y,25.f,25.f}
 	, m_Health{4}
+	, m_pTexture{ new Texture{"player.png"}}
+	,m_FrameNr{0}
 {
+}
+
+Player::~Player()
+{
+	delete m_pTexture;
+	m_pTexture = nullptr;
 }
 
 void Player::Draw()
 {
+	const int totalSprites{14};
+	if (m_FrameNr < totalSprites)
+	{
+		m_FrameNr++;
+	}
+	else
+	{
+		m_FrameNr = 0;
+	}
 	utils::SetColor(Color4f{ 0.f,0.f,1.f,1.f });
 	utils::FillRect(m_BoundsPlayer);
 }
@@ -128,6 +145,17 @@ bool Player::IsHitHeart(Point2f pos, float radius)
 	return isHit;
 }
 
+bool Player::IsHitSpecialZomb(Rectf boundsSpecialZomb)
+{
+	bool value{};
+	if ((boundsSpecialZomb.bottom >= m_BoundsPlayer.bottom || (boundsSpecialZomb.bottom + boundsSpecialZomb.height) >= m_BoundsPlayer.bottom) && (boundsSpecialZomb.bottom <= (m_BoundsPlayer.bottom + m_BoundsPlayer.height) || (boundsSpecialZomb.bottom + boundsSpecialZomb.height) <= (m_BoundsPlayer.bottom + m_BoundsPlayer.height))
+		&& (boundsSpecialZomb.left >= m_BoundsPlayer.left || (boundsSpecialZomb.left + boundsSpecialZomb.width) >= m_BoundsPlayer.left) && (boundsSpecialZomb.left <= (m_BoundsPlayer.left + m_BoundsPlayer.width) || (boundsSpecialZomb.left + boundsSpecialZomb.width) <= (m_BoundsPlayer.left + m_BoundsPlayer.width)))
+	{
+		value = true;
+	}
+	return value;
+}
+
 
 int Player::GetHealth()
 {
@@ -142,6 +170,12 @@ void Player::LoseHealth(int damage)
 void Player::ReceiveHealth(int health)
 {
 	m_Health += 1;
+}
+
+Point2f Player::GetPosition()
+{
+	const Point2f pos{ m_BoundsPlayer.left,m_BoundsPlayer.bottom };
+	return pos;
 }
 
 
