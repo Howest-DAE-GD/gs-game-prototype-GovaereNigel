@@ -3,7 +3,7 @@
 class Player
 {
 public:
-	Player(Point2f& pos);
+	Player(Point2f& pos, float windowWidth, float windowHeight);
 	~Player();
 	void Draw();
 	void Update(float elapsedSec, const Uint8* pStates);
@@ -20,5 +20,5 @@ private:
 	int m_Health;
 	Texture* m_pTexture;
 	int m_FrameNr;
-	Rectf m_Range;
+	Point2f m_Range;
 };

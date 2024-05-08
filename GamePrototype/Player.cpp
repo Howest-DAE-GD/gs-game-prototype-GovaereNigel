@@ -1,12 +1,14 @@
 #include "pch.h"
 #include "Player.h"
 #include "utils.h"
+#include <iostream>
 
-Player::Player(Point2f& pos)
+Player::Player(Point2f& pos,float windowWidth,float windowHeight)
 	:m_BoundsPlayer{pos.x,pos.y,25.f,25.f}
 	, m_Health{8}
 	, m_pTexture{ new Texture{"player.png"}}
 	,m_FrameNr{0}
+	,m_Range{windowWidth,windowHeight}
 {
 }
 
@@ -29,6 +31,18 @@ void Player::Draw()
 	}
 	utils::SetColor(Color4f{ 0.f,0.f,1.f,1.f });
 	utils::FillRect(m_BoundsPlayer);
+
+	utils::SetColor(Color4f{ 1.f,0.f,0.f,0.5f });
+	if(m_Health == 8) utils::FillRect(20.f, m_Range.y - 50.f, 200.f, 20.f);
+	else if (m_Health == 7) utils::FillRect(20.f, m_Range.y - 50.f, 200.f-(200.f/8), 20.f);
+	else if (m_Health == 6) utils::FillRect(20.f, m_Range.y - 50.f, 200.f-(200.f/8*2), 20.f);
+	else if (m_Health == 5) utils::FillRect(20.f, m_Range.y - 50.f, 200.f - (200.f / 8 * 3), 20.f);
+	else if (m_Health == 4) utils::FillRect(20.f, m_Range.y - 50.f, 200.f - (200.f / 8 * 4), 20.f);
+	else if (m_Health == 3) utils::FillRect(20.f, m_Range.y - 50.f, 200.f - (200.f / 8 * 5), 20.f);
+	else if (m_Health == 2) utils::FillRect(20.f, m_Range.y - 50.f, 200.f - (200.f / 8 * 6), 20.f);
+	else if (m_Health == 1) utils::FillRect(20.f, m_Range.y - 50.f, 200.f - (200.f / 8 * 7), 20.f);
+
+	std::cout << m_Health << std::endl;
 }
 
 void Player::Update(float elapsedSec, const Uint8* pStates)
@@ -39,20 +53,25 @@ void Player::Update(float elapsedSec, const Uint8* pStates)
 		if (pStates[SDL_SCANCODE_DOWN])
 		{
 			m_BoundsPlayer.bottom -= speed;
+			if (m_BoundsPlayer.bottom < 0.f) m_BoundsPlayer.bottom = m_Range.y;
 		}
 		if (pStates[SDL_SCANCODE_UP])
 		{
 			m_BoundsPlayer.bottom += speed;
+			if (m_BoundsPlayer.bottom > m_Range.y) m_BoundsPlayer.bottom = (0.f - m_BoundsPlayer.height);
 		}
 		if (pStates[SDL_SCANCODE_LEFT])
-		{
+		{ 
 			m_BoundsPlayer.left -= speed;
+			if (m_BoundsPlayer.left < 0.f) m_BoundsPlayer.left = m_Range.x;
 		}
 		if (pStates[SDL_SCANCODE_RIGHT])
 		{
 			m_BoundsPlayer.left += speed;
+			if (m_BoundsPlayer.left > m_Range.x) m_BoundsPlayer.left = 0.f;
 		}
 	
+
 }
 
 bool Player::IsHitAsteroid(Point2f& posAsteroid, float radius, bool stateOfAsteroid)
