@@ -3,6 +3,7 @@
 #include "MovementPlayer.h"
 #include <vector>
 
+class Timer;
 class Asteroid;
 class Zomb;
 class Hearts;
@@ -66,4 +67,6 @@ private:
 	bool m_StateOfGame{true};
 	float m_Timer{};
 
+	Timer* m_Counter;
+	Point2f m_PosCounter;
 };

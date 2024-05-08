@@ -4,7 +4,7 @@
 
 Player::Player(Point2f& pos)
 	:m_BoundsPlayer{pos.x,pos.y,25.f,25.f}
-	, m_Health{4}
+	, m_Health{8}
 	, m_pTexture{ new Texture{"player.png"}}
 	,m_FrameNr{0}
 {
@@ -169,7 +169,7 @@ void Player::LoseHealth(int damage)
 
 void Player::ReceiveHealth(int health)
 {
-	m_Health += 1;
+	m_Health += 2;
 }
 
 Point2f Player::GetPosition()

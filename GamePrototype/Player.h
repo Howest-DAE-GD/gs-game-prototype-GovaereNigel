@@ -20,4 +20,5 @@ private:
 	int m_Health;
 	Texture* m_pTexture;
 	int m_FrameNr;
+	Rectf m_Range;
 };

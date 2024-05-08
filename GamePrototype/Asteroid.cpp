@@ -18,7 +18,7 @@ Asteroid::Asteroid(float radius, Point2f& window)
 void Asteroid::Draw()
 {
 
-	utils::SetColor(Color4f{ 0.0f, 0.2f, 0.2f, 1.0f });
+	utils::SetColor(Color4f{ 0.0f, 0.2f, 0.15f, 1.0f });
 	utils::FillEllipse(m_Position, m_FakeRadius, m_FakeRadius);
 
 
