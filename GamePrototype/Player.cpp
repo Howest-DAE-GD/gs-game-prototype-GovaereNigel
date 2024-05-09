@@ -32,7 +32,7 @@ void Player::Draw()
 	utils::SetColor(Color4f{ 0.f,0.f,1.f,1.f });
 	utils::FillRect(m_BoundsPlayer);
 
-	utils::SetColor(Color4f{ 1.f,0.f,0.f,0.5f });
+	utils::SetColor(Color4f{ 1.f,0.f,0.f,0.3f });
 	if(m_Health == 8) utils::FillRect(20.f, m_Range.y - 50.f, 200.f, 20.f);
 	else if (m_Health == 7) utils::FillRect(20.f, m_Range.y - 50.f, 200.f-(200.f/8), 20.f);
 	else if (m_Health == 6) utils::FillRect(20.f, m_Range.y - 50.f, 200.f-(200.f/8*2), 20.f);

@@ -69,4 +69,6 @@ private:
 
 	Timer* m_Counter;
 	Point2f m_PosCounter;
+
+	int m_MaxHeatlhPlayer{8};
 };
