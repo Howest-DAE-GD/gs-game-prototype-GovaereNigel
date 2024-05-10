@@ -4,7 +4,7 @@ class Zomb
 public:
 	Zomb(Point2f& window,float width, float height);
 	void Draw();
-	void Update(float elapsedSec);
+	void Update(float elapsedSec, float speedX, float speedY);
 	void ResetPos();
 	int GetRandomType();
 	bool IsHitByAsteroid(Point2f& posAsteroid, float radius, bool stateOfAsteroid);

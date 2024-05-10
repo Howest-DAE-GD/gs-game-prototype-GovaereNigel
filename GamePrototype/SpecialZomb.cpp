@@ -15,9 +15,9 @@ void SpecialZomb::Draw()
 	utils::FillRect(m_BoundsSpecialZomb);
 }
 
-void SpecialZomb::Update(float elapsedSec, Point2f& m_PosPlayer)
+void SpecialZomb::Update(float elapsedSec, Point2f& m_PosPlayer, float speed)
 {
-	float speed{ elapsedSec * 90.f };
+	//float speed{ elapsedSec * 90.f };
 
 	if (m_PosSpecialZomb.x < m_PosPlayer.x)
 	{
@@ -96,41 +96,41 @@ Point2f SpecialZomb::GetRandomStartPos()
 	if (random == 9)
 	{
 		newPos.x = m_Window.x/8*7;
-		newPos.y = 0.f;
+		newPos.y = 0.f - m_BoundsSpecialZomb.height;
 	}
 	if (random == 10)
 	{
 		newPos.x = m_Window.x / 8 * 5;
-		newPos.y = 0.f;
+		newPos.y = 0.f - m_BoundsSpecialZomb.height;
 	}
 	if (random == 11)
 	{
 		newPos.x = m_Window.x / 8 * 3;
-		newPos.y = 0.f;
+		newPos.y = 0.f - m_BoundsSpecialZomb.height;
 	}
 	if (random == 12)
 	{
 		newPos.x = m_Window.x / 8 ;
-		newPos.y = 0.f;
+		newPos.y = 0.f - m_BoundsSpecialZomb.height;
 	}
 	if (random == 13)
 	{
-		newPos.x = 0.f;
+		newPos.x = 0.f-m_BoundsSpecialZomb.width;
 		newPos.y = m_Window.y/8;
 	}
 	if (random == 14)
 	{
-		newPos.x = 0.f;
+		newPos.x = 0.f - m_BoundsSpecialZomb.width;
 		newPos.y = m_Window.y / 8*3;
 	}
 	if (random == 15)
 	{
-		newPos.x = 0.f;
+		newPos.x = 0.f - m_BoundsSpecialZomb.width;
 		newPos.y = m_Window.y / 8*5;
 	}
 	if (random == 16)
 	{
-		newPos.x = 0.f;
+		newPos.x = 0.f - m_BoundsSpecialZomb.width;
 		newPos.y = m_Window.y / 8*7;
 	}
 

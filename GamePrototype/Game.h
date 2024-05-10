@@ -49,7 +49,8 @@ private:
 
 	static const int m_TOTALZOMBIES{6};
 	Zomb* m_Zomb[m_TOTALZOMBIES];
-	float m_TimerZombies{};
+	//float m_TimerZombies{};
+	float m_SpeedZomb;
 
 	static const int m_TOTALHEARTS{ 4 };
 	Hearts* m_Hearts[m_TOTALHEARTS];
@@ -63,6 +64,7 @@ private:
 
 	static const int m_TOTALSPECIALZOMBS{3};
 	SpecialZomb* m_SpecialZomb[m_TOTALSPECIALZOMBS];
+	float m_SpeedSpecialZomb;
 
 	bool m_StateOfGame{true};
 	float m_Timer{};

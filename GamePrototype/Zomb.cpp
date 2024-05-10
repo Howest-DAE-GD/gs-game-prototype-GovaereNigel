@@ -26,10 +26,10 @@ void Zomb::Draw()
 	utils::FillRect(m_Bounds);
 }
 
-void Zomb::Update(float elapsedSec)
+void Zomb::Update(float elapsedSec,float speedX,float speedY)
 {
-	const float speedX{ 60.f * elapsedSec };
-	const float speedY{ 120.f * elapsedSec };
+	//const float speedX{ 60.f * elapsedSec };
+	//const float speedY{ 120.f * elapsedSec };
 	if (m_TypeOfZomb == 0)
 	{
 		if (m_Inverse == true)

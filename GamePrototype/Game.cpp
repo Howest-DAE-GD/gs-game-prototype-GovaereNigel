@@ -105,11 +105,13 @@ if (m_StateOfGame == true)
 	if (m_Timer < 10.f)
 	{
 		m_SpeedAsteroid = 40.f * elapsedSec;
+		m_SpeedZomb = 120.f*elapsedSec;
+
 		if (m_Timer < 2.5)
 		{	
 			for (int idx{}; idx < m_TOTALZOMBIES-4; ++idx)
 			{
-				m_Zomb[idx]->Update(elapsedSec);
+				m_Zomb[idx]->Update(elapsedSec,m_SpeedZomb,m_SpeedZomb/2);
 			}
 			m_Asteroid[0]->Update(elapsedSec, m_SpeedAsteroid);
 			m_PosAsteroid[0] = m_Asteroid[0]->GetPosition();
@@ -191,7 +193,7 @@ if (m_StateOfGame == true)
 		{
 			for (int idx{}; idx < m_TOTALZOMBIES - 2; ++idx)
 			{
-				m_Zomb[idx]->Update(elapsedSec);
+				m_Zomb[idx]->Update(elapsedSec, m_SpeedZomb, m_SpeedZomb / 2);
 			}
 			for (int k{}; k < m_TOTALASTEROIDS - 1; ++k)
 			{
@@ -276,7 +278,7 @@ if (m_StateOfGame == true)
 		{
 			for (int idx{}; idx < m_TOTALZOMBIES; ++idx)
 			{
-				m_Zomb[idx]->Update(elapsedSec);
+				m_Zomb[idx]->Update(elapsedSec, m_SpeedZomb, m_SpeedZomb / 2);
 			}
 			for (int k{}; k < m_TOTALASTEROIDS; ++k)
 			{
@@ -361,9 +363,12 @@ if (m_StateOfGame == true)
 	else if (m_Timer < 20.f)
 	{
 		m_SpeedAsteroid = 45.f * elapsedSec;
+		m_SpeedZomb = 125.f * elapsedSec;
+		m_SpeedSpecialZomb = 90.f * elapsedSec;
+
 		for (int idx{}; idx < m_TOTALSPECIALZOMBS-2; ++idx)
 		{
-			m_SpecialZomb[idx]->Update(elapsedSec, m_PosPlayer);
+			m_SpecialZomb[idx]->Update(elapsedSec, m_PosPlayer,m_SpeedSpecialZomb);
 			if (m_Player->IshHitZomb(m_SpecialZomb[idx]->GetBounds()))
 			{
 				m_Player->LoseHealth(1);
@@ -372,7 +377,7 @@ if (m_StateOfGame == true)
 		}
 		for (int idx{}; idx < m_TOTALZOMBIES; ++idx)
 		{
-			m_Zomb[idx]->Update(elapsedSec);
+			m_Zomb[idx]->Update(elapsedSec, m_SpeedZomb, m_SpeedZomb / 2);
 		}
 		for (int k{}; k < m_TOTALASTEROIDS; ++k)
 		{
@@ -465,9 +470,12 @@ if (m_StateOfGame == true)
 	else if (m_Timer < 30.f)
 	{
 		m_SpeedAsteroid = 50.f * elapsedSec;
+		m_SpeedZomb = 130.f * elapsedSec;
+		m_SpeedSpecialZomb = 90.f * elapsedSec;
+
 		for (int idx{}; idx < m_TOTALSPECIALZOMBS - 1; ++idx)
 		{
-			m_SpecialZomb[idx]->Update(elapsedSec, m_PosPlayer);
+			m_SpecialZomb[idx]->Update(elapsedSec, m_PosPlayer, m_SpeedSpecialZomb);
 			if (m_Player->IshHitZomb(m_SpecialZomb[idx]->GetBounds()))
 			{
 				m_Player->LoseHealth(1);
@@ -476,7 +484,7 @@ if (m_StateOfGame == true)
 		}
 		for (int idx{}; idx < m_TOTALZOMBIES; ++idx)
 		{
-			m_Zomb[idx]->Update(elapsedSec);
+			m_Zomb[idx]->Update(elapsedSec, m_SpeedZomb, m_SpeedZomb / 2);
 		}
 		for (int k{}; k < m_TOTALASTEROIDS; ++k)
 		{
@@ -569,9 +577,12 @@ if (m_StateOfGame == true)
 	else if (m_Timer < 40.f)
 	{
 		m_SpeedAsteroid = 55.f * elapsedSec;
+		m_SpeedZomb = 135.f * elapsedSec;
+		m_SpeedSpecialZomb = 95.f * elapsedSec;
+
 		for (int idx{}; idx < m_TOTALSPECIALZOMBS; ++idx)
 		{
-			m_SpecialZomb[idx]->Update(elapsedSec, m_PosPlayer);
+			m_SpecialZomb[idx]->Update(elapsedSec, m_PosPlayer, m_SpeedSpecialZomb);
 			if (m_Player->IshHitZomb(m_SpecialZomb[idx]->GetBounds()))
 			{
 				m_Player->LoseHealth(1);
@@ -580,7 +591,7 @@ if (m_StateOfGame == true)
 		}
 		for (int idx{}; idx < m_TOTALZOMBIES; ++idx)
 		{
-			m_Zomb[idx]->Update(elapsedSec);
+			m_Zomb[idx]->Update(elapsedSec, m_SpeedZomb, m_SpeedZomb / 2);
 		}
 		for (int k{}; k < m_TOTALASTEROIDS; ++k)
 		{
@@ -673,9 +684,12 @@ if (m_StateOfGame == true)
 	else if (m_Timer < 50.f)
 	{
 		m_SpeedAsteroid = 60.f * elapsedSec;
+		m_SpeedZomb = 140.f * elapsedSec;
+		m_SpeedSpecialZomb = 100.f * elapsedSec;
+
 		for (int idx{}; idx < m_TOTALSPECIALZOMBS; ++idx)
 		{
-			m_SpecialZomb[idx]->Update(elapsedSec, m_PosPlayer);
+			m_SpecialZomb[idx]->Update(elapsedSec, m_PosPlayer, m_SpeedSpecialZomb);
 			if (m_Player->IshHitZomb(m_SpecialZomb[idx]->GetBounds()))
 			{
 				m_Player->LoseHealth(1);
@@ -684,7 +698,7 @@ if (m_StateOfGame == true)
 		}
 		for (int idx{}; idx < m_TOTALZOMBIES; ++idx)
 		{
-			m_Zomb[idx]->Update(elapsedSec);
+			m_Zomb[idx]->Update(elapsedSec, m_SpeedZomb, m_SpeedZomb / 2);
 		}
 		for (int k{}; k < m_TOTALASTEROIDS; ++k)
 		{
@@ -777,9 +791,12 @@ if (m_StateOfGame == true)
 	else if (m_Timer < 60.f)
 	{
 		m_SpeedAsteroid = 65.f * elapsedSec;
+		m_SpeedZomb = 145.f * elapsedSec;
+		m_SpeedSpecialZomb = 100.f * elapsedSec;
+
 		for (int idx{}; idx < m_TOTALSPECIALZOMBS; ++idx)
 		{
-			m_SpecialZomb[idx]->Update(elapsedSec, m_PosPlayer);
+			m_SpecialZomb[idx]->Update(elapsedSec, m_PosPlayer, m_SpeedSpecialZomb);
 			if (m_Player->IshHitZomb(m_SpecialZomb[idx]->GetBounds()))
 			{
 				m_Player->LoseHealth(1);
@@ -788,7 +805,7 @@ if (m_StateOfGame == true)
 		}
 		for (int idx{}; idx < m_TOTALZOMBIES; ++idx)
 		{
-			m_Zomb[idx]->Update(elapsedSec);
+			m_Zomb[idx]->Update(elapsedSec, m_SpeedZomb, m_SpeedZomb / 2);
 		}
 		for (int k{}; k < m_TOTALASTEROIDS; ++k)
 		{
