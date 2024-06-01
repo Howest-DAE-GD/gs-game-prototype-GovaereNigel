@@ -9,16 +9,16 @@ Asteroid::Asteroid(float radius, Point2f& window)
 	,m_Position{GetRandomPosition()}
 	,m_Damage{2}
 	,m_FakeRadius{}
-	,m_State{false}
+	,m_State{}
 	,m_Timer{}
-	,m_HasHeart{false}
+	,m_HasHeart{}
 {
 }
 
 void Asteroid::Draw()
 {
 
-	utils::SetColor(Color4f{ 0.0f, 0.2f, 0.15f, 1.0f });
+	utils::SetColor(Color4f{ 0.0f, 0.2f, 0.15f, m_FakeRadius/m_Radius });
 	utils::FillEllipse(m_Position, m_FakeRadius, m_FakeRadius);
 
 

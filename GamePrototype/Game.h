@@ -39,7 +39,8 @@ private:
 	void Cleanup( );
 	void ClearBackground( ) const;
 
-	Point2f m_Window{GetViewPort().width,GetViewPort().height};
+	const float m_HeightBar{ 70.f };
+	Point2f m_Window{GetViewPort().width,GetViewPort().height-m_HeightBar};
 
 	static const int m_TOTALASTEROIDS{3};
 	Asteroid* m_Asteroid[m_TOTALASTEROIDS];
@@ -52,7 +53,7 @@ private:
 	//float m_TimerZombies{};
 	float m_SpeedZomb;
 
-	static const int m_TOTALHEARTS{ 4 };
+	static const int m_TOTALHEARTS{ 1 };
 	Hearts* m_Hearts[m_TOTALHEARTS];
 	Point2f m_PosHearts[m_TOTALHEARTS];
 	Point2f m_PosDefaultHeart{ -200.f,0.f };
@@ -73,4 +74,5 @@ private:
 	Point2f m_PosCounter;
 
 	int m_MaxHeatlhPlayer{8};
+
 };

@@ -3,12 +3,12 @@
 #include "utils.h"
 #include <iostream>
 
-Player::Player(Point2f& pos,float windowWidth,float windowHeight)
+Player::Player(Point2f& pos,float rangeWidth,float rangeHeight)
 	:m_BoundsPlayer{pos.x,pos.y,25.f,25.f}
-	, m_Health{8}
+	, m_Health{6}
 	, m_pTexture{ new Texture{"player.png"}}
 	,m_FrameNr{0}
-	,m_Range{windowWidth,windowHeight}
+	,m_Range{rangeWidth,rangeHeight}
 {
 }
 
@@ -33,7 +33,7 @@ void Player::Draw()
 	utils::FillRect(m_BoundsPlayer);
 
 	utils::SetColor(Color4f{ 1.f,0.f,0.f,0.3f });
-	if(m_Health == 8) utils::FillRect(20.f, m_Range.y - 50.f, 200.f, 20.f);
+	if(m_Health >= 8) utils::FillRect(20.f, m_Range.y - 50.f, 200.f, 20.f);
 	else if (m_Health == 7) utils::FillRect(20.f, m_Range.y - 50.f, 200.f-(200.f/8), 20.f);
 	else if (m_Health == 6) utils::FillRect(20.f, m_Range.y - 50.f, 200.f-(200.f/8*2), 20.f);
 	else if (m_Health == 5) utils::FillRect(20.f, m_Range.y - 50.f, 200.f - (200.f / 8 * 3), 20.f);
@@ -188,7 +188,7 @@ void Player::LoseHealth(int damage)
 
 void Player::ReceiveHealth(int health)
 {
-	m_Health += 2;
+	m_Health += 1;
 }
 
 Point2f Player::GetPosition()
