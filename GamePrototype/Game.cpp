@@ -947,7 +947,7 @@ void Game::Update( float elapsedSec )
 	}
 	      m_Counter->Update(elapsedSec, m_Timer, m_StartScreen->GetStateOfEndScreen());
           m_StartScreen->Update(elapsedSec);
-
+		  
 }
 
 void Game::Draw( ) const
