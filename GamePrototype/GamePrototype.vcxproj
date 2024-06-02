@@ -149,21 +149,25 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
   <ItemGroup>
     <ClCompile Include="Asteroid.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Healthbar.cpp" />
     <ClCompile Include="Hearts.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SpecialZomb.cpp" />
+    <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Zomb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Asteroid.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Healthbar.h" />
     <ClInclude Include="Hearts.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SpecialZomb.h" />
+    <ClInclude Include="Screen.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Zomb.h" />
   </ItemGroup>

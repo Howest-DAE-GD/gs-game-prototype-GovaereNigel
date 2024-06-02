@@ -32,7 +32,7 @@ void Player::Draw()
 	utils::SetColor(Color4f{ 0.f,0.f,1.f,1.f });
 	utils::FillRect(m_BoundsPlayer);
 
-	utils::SetColor(Color4f{ 1.f,0.f,0.f,0.3f });
+	/*utils::SetColor(Color4f{ 1.f,0.f,0.f,0.3f });
 	if(m_Health >= 8) utils::FillRect(20.f, m_Range.y - 50.f, 200.f, 20.f);
 	else if (m_Health == 7) utils::FillRect(20.f, m_Range.y - 50.f, 200.f-(200.f/8), 20.f);
 	else if (m_Health == 6) utils::FillRect(20.f, m_Range.y - 50.f, 200.f-(200.f/8*2), 20.f);
@@ -40,9 +40,9 @@ void Player::Draw()
 	else if (m_Health == 4) utils::FillRect(20.f, m_Range.y - 50.f, 200.f - (200.f / 8 * 4), 20.f);
 	else if (m_Health == 3) utils::FillRect(20.f, m_Range.y - 50.f, 200.f - (200.f / 8 * 5), 20.f);
 	else if (m_Health == 2) utils::FillRect(20.f, m_Range.y - 50.f, 200.f - (200.f / 8 * 6), 20.f);
-	else if (m_Health == 1) utils::FillRect(20.f, m_Range.y - 50.f, 200.f - (200.f / 8 * 7), 20.f);
+	else if (m_Health == 1) utils::FillRect(20.f, m_Range.y - 50.f, 200.f - (200.f / 8 * 7), 20.f);*/
 
-	std::cout << m_Health << std::endl;
+	//std::cout << m_Health << std::endl;
 }
 
 void Player::Update(float elapsedSec, const Uint8* pStates)
@@ -188,7 +188,7 @@ void Player::LoseHealth(int damage)
 
 void Player::ReceiveHealth(int health)
 {
-	m_Health += 1;
+	if (m_Health < 6) m_Health += 1;
 }
 
 Point2f Player::GetPosition()

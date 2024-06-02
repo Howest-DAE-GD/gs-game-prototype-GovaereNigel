@@ -2,14 +2,17 @@
 #include "Timer.h"
 #include "Texture.h"
 
+
 static const int m_TOTALSPRITES{10};
 Texture* m_SpriteSheet[m_TOTALSPRITES];
 
-Timer::Timer(const Point2f& position)
-:m_FirstPosition{position.x-10.f,position.y}
+Timer::Timer(const Point2f& position, Point2f& window)
+	:m_Window{window}
+,m_FirstPosition{position.x-10.f,position.y}
 , m_SecondPosition{ position.x +10.f,position.y }
 , m_FirstNumber{0}
 , m_SecondNumber{0}
+, m_Scale{1.f}
 {
 	m_SpriteSheet[0] = new Texture{"0.png"};
 	m_SpriteSheet[1] = new Texture{ "1.png" };
@@ -34,19 +37,29 @@ Timer::~Timer()
 	}
 }
 
-void Timer::Draw()
+void Timer::Draw(bool stateEndScreen)
 {
+	const float scaleChange{0.1f};
+	const float totalScale{3.f};
+	if (stateEndScreen == true)
+	{
+		if (m_Scale < totalScale)
+		{
+			m_Scale += scaleChange; 
+		}
+	}
+
 	for (int idx{}; idx < m_TOTALSPRITES; ++idx)
 	{
-		if (m_FirstNumber == idx) m_SpriteSheet[idx]->Draw(m_FirstPosition);
+		if (m_FirstNumber == idx) m_SpriteSheet[idx]->Draw(Rectf{m_FirstPosition.x,m_FirstPosition.y,m_SpriteSheet[idx]->GetWidth()*m_Scale,m_SpriteSheet[idx]->GetHeight() * m_Scale });
 	}
 	for (int idx{}; idx < m_TOTALSPRITES; ++idx)
 	{
-		if (m_SecondNumber == idx) m_SpriteSheet[idx]->Draw(m_SecondPosition);
+		if (m_SecondNumber == idx) m_SpriteSheet[idx]->Draw(Rectf{ m_SecondPosition.x,m_SecondPosition.y,m_SpriteSheet[idx]->GetWidth() * m_Scale,m_SpriteSheet[idx]->GetHeight() * m_Scale });
 	}
 }
 
-void Timer::Update(float timer)
+void Timer::Update(float elapsedSec, float timer, bool stateEndScreen)
 {
 	if (timer < 1)
 	{
@@ -353,4 +366,33 @@ void Timer::Update(float timer)
 		m_FirstNumber = 6;
 		m_SecondNumber = 0;
 	}
+
+	if (stateEndScreen == true)
+	{
+		float speed{elapsedSec*100.f};
+		const Point2f GoToPos1{m_Window.x/2-(10.f*m_Scale),m_Window.y/2};
+		const Point2f GoToPos2{ m_Window.x / 2 +(10.f * m_Scale),m_Window.y / 2 };
+		if (m_FirstPosition.x > GoToPos1.x)
+		{
+			m_FirstPosition.x -= speed;
+		}
+		else m_FirstPosition.x = GoToPos1.x;
+		if (m_FirstPosition.y > GoToPos1.y)
+		{
+			m_FirstPosition.y -= speed;
+		}
+		else m_FirstPosition.y = GoToPos1.y;
+
+		if (m_SecondPosition.x > GoToPos2.x)
+		{
+			m_SecondPosition.x -= speed;
+		}
+		else m_SecondPosition.x = GoToPos2.x;
+		if (m_SecondPosition.y > GoToPos2.y)
+		{
+			m_SecondPosition.y -= speed;
+		}
+		else m_SecondPosition.y = GoToPos2.y;
+	}
+
 }

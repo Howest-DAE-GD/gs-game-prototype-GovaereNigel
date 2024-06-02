@@ -8,7 +8,10 @@ class Asteroid;
 class Zomb;
 class Hearts;
 class Player;
+class Healthbar;
 class SpecialZomb;
+class Screen;
+
 class Game : public BaseGame
 {
 public:
@@ -59,9 +62,13 @@ private:
 	Point2f m_PosDefaultHeart{ -200.f,0.f };
 
 
+
 	Player* m_Player;
 	Point2f m_PosPlayer;
 	float m_SpeedPlayer;
+
+	Healthbar* m_Healthbar;
+
 
 	static const int m_TOTALSPECIALZOMBS{3};
 	SpecialZomb* m_SpecialZomb[m_TOTALSPECIALZOMBS];
@@ -74,5 +81,7 @@ private:
 	Point2f m_PosCounter;
 
 	int m_MaxHeatlhPlayer{8};
+
+	Screen* m_StartScreen; 
 
 };
