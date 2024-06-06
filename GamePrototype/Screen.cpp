@@ -20,12 +20,12 @@ Screen::Screen(const Point2f& position, Point2f& window)
 	std::string text4{"CONTROLS: arrow up, arrow down, arrow left, arrow right"};
 	std::string text5{ "PRESS SPACE IF YOU WANT TO TRY" };
 
-	m_Text[0] = new Texture{title,"DIN-Light.otf",25,Color4f{ 0.0f, 0.3f, 0.3f, 1.0f}};
-	m_Text[1] = new Texture{ text1,"DIN-Light.otf",20,Color4f{ 0.0f, 0.3f, 0.3f, 1.0f} };
-	m_Text[2] = new Texture{ text2,"DIN-Light.otf",20,Color4f{ 0.0f, 0.3f, 0.3f, 1.0f} };
-	m_Text[3] = new Texture{ text3,"DIN-Light.otf",20,Color4f{ 0.0f, 0.3f, 0.3f, 1.0f} };
-	m_Text[4] = new Texture{ text4,"DIN-Light.otf",20,Color4f{ 0.0f, 0.3f, 0.3f, 1.0f} };
-	m_Text[5] = new Texture{ text5,"DIN-Light.otf",20,Color4f{ 0.0f, 0.3f, 0.3f, 1.0f} };
+	m_Text[0] = new Texture{title,"DIN-Light.otf",25,Color4f{ 0.0f, 0.5f, 0.5f, 1.0f}};
+	m_Text[1] = new Texture{ text1,"DIN-Light.otf",20,Color4f{ 0.0f, 0.5f, 0.5f, 1.0f} };
+	m_Text[2] = new Texture{ text2,"DIN-Light.otf",20,Color4f{ 0.0f, 0.5f, 0.5f, 1.0f} };
+	m_Text[3] = new Texture{ text3,"DIN-Light.otf",20,Color4f{ 0.0f, 0.5f, 0.5f, 1.0f} };
+	m_Text[4] = new Texture{ text4,"DIN-Light.otf",20,Color4f{ 0.0f, 0.5f, 0.5f, 1.0f} };
+	m_Text[5] = new Texture{ text5,"DIN-Light.otf",20,Color4f{ 0.0f, 0.5f, 0.5f, 1.0f} };
 
 }
 
